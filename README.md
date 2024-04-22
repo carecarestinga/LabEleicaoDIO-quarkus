@@ -40,4 +40,3 @@
 - Jaeger Tracing ( plataforma de rastreamento )
 - Testcontainers ( testes de integração que fornece contêineres Docker pré-configurados e
 escaláveis para testes automatizados )
-- 
