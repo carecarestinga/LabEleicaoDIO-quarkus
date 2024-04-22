@@ -1,10 +1,9 @@
 package domain;
 
-import org.junit.jupiter.api.Test;
-
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 import java.util.NoSuchElementException;
@@ -29,7 +28,7 @@ public class CandidateServiceTest {
     CandidateRepository repository;
 
     @Test
-    public void save() {
+    void save() {
         var domain = Instancio.create(Candidate.class);
 
         service.save(domain);
@@ -39,7 +38,7 @@ public class CandidateServiceTest {
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         var candidates = Instancio.stream(Candidate.class).limit(10).toList();
 
         when(repository.findAll()).thenReturn(candidates);
@@ -53,7 +52,7 @@ public class CandidateServiceTest {
     }
 
     @Test
-    public void findById_whenCandidateIsFound_returnsCandidate() {
+    void findById_whenCandidateIsFound_returnsCandidate() {
         var domain = Instancio.create(Candidate.class);
 
         when(repository.findById(domain.id())).thenReturn(Optional.of(domain));
@@ -67,7 +66,7 @@ public class CandidateServiceTest {
     }
 
     @Test
-    public void findById_whenCandidateIsNotFound_throwsException() {
+    void findById_whenCandidateIsNotFound_throwsException() {
         var id = UUID.randomUUID().toString();
         when(repository.findById(id)).thenReturn(Optional.empty());
         assertThrows(NoSuchElementException.class, () -> service.findById(id));

@@ -9,6 +9,9 @@ import org.junit.jupiter.api.AfterEach;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+/**
+ * Classe de teste do Repository que extende da Abstrata
+ */
 @QuarkusTest
 class SQLCandidateRepositoryTest extends CandidateRepositoryTest {
     @Inject

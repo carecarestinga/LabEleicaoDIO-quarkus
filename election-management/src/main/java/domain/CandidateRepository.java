@@ -22,4 +22,4 @@ public interface CandidateRepository {
     default Optional<Candidate> findById(String id) {
         return find(new CandidateQuery.Builder().ids(Set.of(id)).build()).stream().findFirst();
     }
-}
+

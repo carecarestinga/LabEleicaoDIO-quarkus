@@ -10,6 +10,9 @@ import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Classe de Teste Abstrata
+ */
 public abstract class CandidateRepositoryTest {
     public abstract CandidateRepository repository();
 
