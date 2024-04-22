@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
  * Classe de Teste das Regras de Negócio do candidato
  */
 @QuarkusTest
-public class CandidateServiceTest {
+class CandidateServiceTest {
     @Inject
     CandidateService service;
 

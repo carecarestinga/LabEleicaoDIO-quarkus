@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Optional;
 
+/**
+ * Classe Entidade Candidato de acesso ao Repositrio
+ */
 @Entity(name = "candidates")
 public class Candidate {
     @Id

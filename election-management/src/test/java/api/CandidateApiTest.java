@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
  * Classe que testa a API de Candidatos
  */
 @QuarkusTest
-public class CandidateApiTest {
+class CandidateApiTest {
     @Inject
     CandidateApi candidateApi;
 
