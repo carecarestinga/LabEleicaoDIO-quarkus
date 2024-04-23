@@ -3,6 +3,7 @@ package infrastructure.repositories;
 import domain.Candidate;
 import domain.Election;
 import domain.ElectionRepository;
+import domain.annotations.SQL;
 import infrastructure.repositories.entities.ElectionCandidate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,6 +19,7 @@ import static java.util.stream.Collectors.groupingBy;
 /**
  * Classe que implementa um contrato com do core do dominio do voto
  */
+@SQL
 @ApplicationScoped
 public class SQLElectionRepository implements ElectionRepository {
     private final EntityManager entityManager;
@@ -38,6 +40,7 @@ public class SQLElectionRepository implements ElectionRepository {
                 .forEach(entityManager::merge);
     }
 
+    @Override
     public List<Election> findAll() {
         Stream<Object[]> stream = entityManager.createNativeQuery("SELECT e.id AS election_id, c.id AS candidate_id, c.photo, c.given_name, c.family_name, c.email, c.phone, c.job_title, ec.votes FROM elections AS e INNER JOIN election_candidate AS ec ON ec.election_id = e.id INNER JOIN candidates AS c ON ec.candidate_id = c.id")
                 .getResultStream();
