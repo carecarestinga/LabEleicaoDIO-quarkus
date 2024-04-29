@@ -1,8 +1,10 @@
-package infrastructure.resources;
+package domain;
+
 
 import api.dto.in.CreateCandidate;
 import api.dto.in.UpdateCandidate;
 import api.dto.out.Candidate;
+import infrastructure.resources.CandidateResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 import org.instancio.Instancio;
@@ -18,18 +20,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
- * Classe que testa as integração da API
+ * Classe de Teste das Requisições do candidato
  */
 @QuarkusIntegrationTest
 @TestHTTPEndpoint(CandidateResource.class)
-class CandidateResourceIT {
+public class CandidateResourceIT {
     @Test
     void create() {
         var in = Instancio.create(CreateCandidate.class);
 
         given().contentType(MediaType.APPLICATION_JSON).body(in)
-                .when().post()
-                .then().statusCode(RestResponse.StatusCode.CREATED);
+               .when().post()
+               .then().statusCode(RestResponse.StatusCode.CREATED);
     }
 
     @Test
@@ -38,21 +40,21 @@ class CandidateResourceIT {
         var in = Instancio.create(UpdateCandidate.class);
 
         var update = Instancio.of(UpdateCandidate.class)
-                .set(field("photo"), in.photo())
-                .set(field("givenName"), "Thiago")
-                .set(field("familyName"), "Poiani")
-                .set(field("email"), in.email())
-                .set(field("phone"), in.phone())
-                .set(field("jobTitle"), in.jobTitle())
-                .create();
+                              .set(field("photo"), in.photo())
+                              .set(field("givenName"), "Thiago")
+                              .set(field("familyName"), "Poiani")
+                              .set(field("email"), in.email())
+                              .set(field("phone"), in.phone())
+                              .set(field("jobTitle"), in.jobTitle())
+                              .create();
 
         var response1 = given().contentType(MediaType.APPLICATION_JSON).body(in)
-                .when().put("/" + id)
-                .then().statusCode(RestResponse.StatusCode.OK).extract().as(Candidate.class);
+                               .when().put("/" + id)
+                               .then().statusCode(RestResponse.StatusCode.OK).extract().as(Candidate.class);
 
         var response2 = given().contentType(MediaType.APPLICATION_JSON).body(update)
-                .when().put("/" + id)
-                .then().statusCode(RestResponse.StatusCode.OK).extract().as(Candidate.class);
+                               .when().put("/" + id)
+                               .then().statusCode(RestResponse.StatusCode.OK).extract().as(Candidate.class);
 
         assertEquals(response1.id(), id);
         assertEquals(response2.id(), id);

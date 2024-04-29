@@ -24,6 +24,7 @@ import java.util.List;
 public class ElectionResource {
     private final ElectionApi api;
 
+
     public ElectionResource(ElectionApi api) {
         this.api = api;
     }
@@ -37,6 +38,6 @@ public class ElectionResource {
 
     @GET
     public List<Election> list() {
-        return api.list();
+        return api.findAll();
     }
 }

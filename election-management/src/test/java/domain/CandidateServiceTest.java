@@ -6,9 +6,10 @@ import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,48 +30,51 @@ class CandidateServiceTest {
 
     @Test
     void save() {
-        var domain = Instancio.create(Candidate.class);
+        Candidate candidate = Instancio.create(Candidate.class);
 
-        service.save(domain);
+        service.save(candidate);
 
-        verify(repository).save(domain);
+        verify(repository).save(candidate);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void findAll() {
-        var candidates = Instancio.stream(Candidate.class).limit(10).toList();
+        List<Candidate> candidates = Instancio.stream(Candidate.class).limit(10).toList();
 
         when(repository.findAll()).thenReturn(candidates);
 
-        var result = service.findAll();
+        List<Candidate> result = service.findAll();
 
         verify(repository).findAll();
         verifyNoMoreInteractions(repository);
 
-        assertEquals(result, candidates);
+        assertEquals(candidates, result);
     }
 
     @Test
     void findById_whenCandidateIsFound_returnsCandidate() {
-        var domain = Instancio.create(Candidate.class);
+        Candidate candidate = Instancio.create(Candidate.class);
 
-        when(repository.findById(domain.id())).thenReturn(Optional.of(domain));
+        when(repository.findById(candidate.id())).thenReturn(Optional.of(candidate));
 
-        var result = service.findById(domain.id());
+        Candidate result = service.findById(candidate.id());
 
-        verify(repository).findById(domain.id());
+        verify(repository).findById(candidate.id());
         verifyNoMoreInteractions(repository);
 
-        assertEquals(result, domain);
+        assertEquals(candidate, result);
     }
 
     @Test
     void findById_whenCandidateIsNotFound_throwsException() {
-        var id = UUID.randomUUID().toString();
-        when(repository.findById(id)).thenReturn(Optional.empty());
-        assertThrows(NoSuchElementException.class, () -> service.findById(id));
-        verify(repository).findById(id);
+        Candidate candidate = Instancio.create(Candidate.class);
+
+        when(repository.findById(candidate.id())).thenReturn(Optional.empty());
+
+        assertThrows(NoSuchElementException.class, () -> service.findById(candidate.id()));
+
+        verify(repository).findById(candidate.id());
         verifyNoMoreInteractions(repository);
     }
 }

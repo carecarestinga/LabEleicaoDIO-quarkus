@@ -2,7 +2,6 @@ package infrastructure.resources;
 
 import api.CandidateApi;
 import api.dto.in.CreateCandidate;
-import api.dto.in.UpdateCandidate;
 import api.dto.out.Candidate;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
@@ -12,6 +11,7 @@ import org.jboss.resteasy.reactive.RestResponse;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
+
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
@@ -34,29 +34,11 @@ class CandidateResourceTest {
         var in = Instancio.create(CreateCandidate.class);
 
         given().contentType(MediaType.APPLICATION_JSON).body(in)
-                .when().post()
-                .then().statusCode(RestResponse.StatusCode.CREATED);
+               .when().post()
+               .then().statusCode(RestResponse.StatusCode.CREATED);
 
         verify(api).create(in);
         verifyNoMoreInteractions(api);
-    }
-
-
-    @Test
-    void update() {
-        var in = Instancio.create(UpdateCandidate.class);
-        var out = Instancio.create(Candidate.class);
-
-        when(api.update(out.id(), in)).thenReturn(out);
-
-        var response = given().contentType(MediaType.APPLICATION_JSON).body(in)
-                .when().put("/" + out.id())
-                .then().statusCode(RestResponse.StatusCode.OK).extract().as(Candidate.class);
-
-        verify(api).update(out.id(), in);
-        verifyNoMoreInteractions(api);
-
-        assertEquals(out, response);
     }
 
     @Test
