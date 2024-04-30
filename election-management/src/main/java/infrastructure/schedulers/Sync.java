@@ -1,28 +1,28 @@
-package infrastructure.schedulers;
+// package infrastructure.schedulers;
 
-import domain.annotations.Principal;
-import infrastructure.repositories.RedisElectionRepository;
-import infrastructure.repositories.SQLElectionRepository;
-import io.quarkus.scheduler.Scheduled;
+// import domain.annotations.Principal;
+// import infrastructure.repositories.RedisElectionRepository;
+// import infrastructure.repositories.SQLElectionRepository;
+// import io.quarkus.scheduler.Scheduled;
 
-import javax.enterprise.context.ApplicationScoped;
+// import javax.enterprise.context.ApplicationScoped;
 
-/**
- * Classe que sincronizara as APIs
- */
-@ApplicationScoped
-public class Sync {
-    private final SQLElectionRepository sqlRepository;
-    private final RedisElectionRepository redisRepository;
+// /**
+//  * Classe que sincronizara as APIs
+//  */
+// @ApplicationScoped
+// public class Sync {
+//     private final SQLElectionRepository sqlRepository;
+//     private final RedisElectionRepository redisRepository;
 
-    public Sync(@Principal SQLElectionRepository sqlRepository, RedisElectionRepository redisRepository) {
-        this.sqlRepository = sqlRepository;
-        this.redisRepository = redisRepository;
-    }
+//     public Sync(@Principal SQLElectionRepository sqlRepository, RedisElectionRepository redisRepository) {
+//         this.sqlRepository = sqlRepository;
+//         this.redisRepository = redisRepository;
+//     }
 
-    @Scheduled(cron = "*/5 * * * * ?")
-    void syncWorker() {
-        sqlRepository.findAll().forEach(election -> sqlRepository.sync(redisRepository.sync(election)));
-    }
+//     @Scheduled(cron = "*/5 * * * * ?")
+//     void syncWorker() {
+//         sqlRepository.findAll().forEach(election -> sqlRepository.sync(redisRepository.sync(election)));
+//     }
 
-}
+// }
